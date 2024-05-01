@@ -18,14 +18,16 @@ Select any project of your choice. This could range from:
 
 	- [x] D. Appropriate algorithms/data structures/data types used appropriately.
 
-	- [ ] E. OOP best practices implemented (Separating code to classes, data hiding, inheritance). Graphical user interface available and intuitive to use where applicable (must separate code in format discussed in lab 10 or test 10). 
+	- [x] E. OOP best practices implemented (Separating code to classes, data hiding, inheritance). 
 
-    - [ ] F. Proper documentation.
+    - [ ] F. Graphical user interface available and intuitive to use where applicable (must separate code in format discussed in lab 10 or test 10). 
 
-	- [x] G. Using descriptive variable names, class names, and file names.
+    - [ ] G. Proper documentation.
 
-	- [x] H. Docstrings for functions.
+	- [x] H. Using descriptive variable names, class names, and file names.
 
-	- [x] I. Type hinting.
+	- [x] I. Docstrings for functions.
 
-	- [ ] J. Public GitHub link submitted with all project files placed/merged into the main/master branch. The project files could range from python files, images, documents, images, sound files, text files, binary files, executable files, etc. (generally anything that is needed for the application to work).
+	- [x] J. Type hinting.
+
+	- [ ] K. Public GitHub link submitted with all project files placed/merged into the main/master branch. The project files could range from python files, images, documents, images, sound files, text files, binary files, executable files, etc. (generally anything that is needed for the application to work).
