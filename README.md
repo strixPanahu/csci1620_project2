@@ -12,7 +12,7 @@ Select any project of your choice. This could range from:
 
 - [x] A. Code is organized into modules where applicable.
 
-- [ ] B. Programs that use/retrieve/store data use files/databases/API.
+- [x] B. Programs that use/retrieve/store data use files/databases/API.
 
 - [x] C. Data validation and exception handling is present where applicable.
 
@@ -20,7 +20,7 @@ Select any project of your choice. This could range from:
 
 - [x] E. OOP best practices implemented (Separating code to classes, data hiding, inheritance). 
 
-- [ ] F. Graphical user interface available and intuitive to use where applicable (must separate code in format discussed in lab 10 or test 10). 
+- [x] F. Graphical user interface available and intuitive to use where applicable (must separate code in format discussed in lab 10 or test 10). 
 
 - [ ] G. Proper documentation.
 

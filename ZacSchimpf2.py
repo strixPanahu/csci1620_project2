@@ -5,100 +5,71 @@
     Week 02 - Lab 02
     29/01/2024
 """
+from csv import writer
+from statistics import median, mean
+
+import gui
 
 
 class Grader:
-    def __init__(self) -> None:
+    def __init__(self, scores) -> None:
         """
         Main logic structure that accepts students & _scores, creates grade scale, and prints results
         """
-        self.students = None
-        self._scores = None
-        self._grade_scale = None
-
-        self.get_students()
-        self.set_scores()
-        self.set_grade_scale()
+        self._scores = scores
+        self._grade_scale = self.set_grade_scale()
 
         print(self.__str__())
+        self.output_to_csv()
 
-    def get_students(self) -> None:
-        """
-        Sets quantity of students
-        """
-
-        self.students = input("Total number of students: ").strip()
-        try:
-            self.students = int(self.students)
-
-            if self.students < 0:
-                raise IndexError
-
-        except IndexError:
-            print("\"" + str(self.students) + "\" must be a positive whole-number integer value")
-            self.get_students()
-
-        except ValueError:
-            print("\"" + str(self.students) + "\" must be a whole-number integer value, please try again.")
-            self.get_students()
-
-    def set_scores(self) -> None:
-        """
-        Requests input of score and appends letter grade scale
-        """
-
-        try:
-            self.scores_input()
-            self.convert_to_list()
-
-        except ValueError:
-            print("Scores must only include whole-number integer values between 0-100.")
-            self.set_scores()
-
-        except IndexError:
-            print("Scores contains the incorrect amount space-separated values for each student. "
-                  + "Please provide a minimum of " + str(self.students) + " values.")
-            self.set_scores()
-
-    def scores_input(self) -> None:
-        """
-        Accepts user input, cleans, and validates spacing
-        """
-
-        self._scores = input("Enter " + str(self.students) + " score(s): ").strip()
-
-        spaces_count = self._scores.count(' ')
-        score_breaks = self.students - 1
-        if spaces_count < score_breaks:
-            raise IndexError
-
-    def convert_to_list(self):
-        """
-        Processes conversion of values and creates grade scale
-        """
-
-        scores_list = self._scores.split()
-        scores_list = list(map(int, scores_list))
-        scores_list = scores_list[slice(self.students)]
-
-        for current_score in scores_list:
-            if current_score not in range(0, 101):
-                raise ValueError
-
-        self._scores = scores_list
-
-    def set_grade_scale(self) -> None:
+    def set_grade_scale(self) -> dict:
         """
         Create weighted grade scale & append to provided _scores
+        :return Dict containing A, B, C, D, & F percentage cutoffs
         """
 
         best_score = max(self._scores)
 
-        self._grade_scale = {'A': best_score - 10,
-                             'B': best_score - 20,
-                             'C': best_score - 30,
-                             'D': best_score - 40,
-                             'F': best_score - 41}
+        return {'A': best_score - 10,
+                'B': best_score - 20,
+                'C': best_score - 30,
+                'D': best_score - 40,
+                'F': best_score - 41}
+
+    def get_letter_grade(self, grade) -> str:
+        """
+        Retrieve weighted letter grade for provided grade percentage
+        """
+        match grade:
+            case value if value in range(self._grade_scale.get('A'), (max(self._scores) + 1)):
+                grade = 'A'
+            case value if value in range(self._grade_scale.get('B'), self._grade_scale.get('A')):
+                grade = 'B'
+            case value if value in range(self._grade_scale.get('C'), self._grade_scale.get('B')):
+                grade = 'C'
+            case value if value in range(self._grade_scale.get('D'), self._grade_scale.get('C')):
+                grade = 'D'
+            case _:
+                grade = 'F'
+
+        return grade
+
+    def output_to_csv(self):
+        """
+        Write a List[{}, {}] to a csv file in the current working directory, named output.csv
+        :return None
+        """
+
+        outbound_name = "output.csv"
+
+        with open(outbound_name, 'w', newline='') as outbound_file:
+            csv_writer = writer(outbound_file, delimiter=',')
+            for current_score in self._scores:
+                csv_writer.writerow(["Student " + str(self._scores.index(current_score) + 1),
+                                     current_score,
+                                     self.get_letter_grade(current_score)])
+            csv_writer.writerow(["Median", median(self._scores)])
+            csv_writer.writerow(["Mean", mean(self._scores)])
 
     def __str__(self) -> str:
         """
@@ -107,27 +78,16 @@ class Grader:
         """
 
         output = ""
-        iteration = 1
 
         for current_score in self._scores:
-            match current_score:
-                case value if value in range(self._grade_scale.get('A'), (max(self._scores) + 1)):
-                    current_grade = 'A'
-                case value if value in range(self._grade_scale.get('B'), self._grade_scale.get('A')):
-                    current_grade = 'B'
-                case value if value in range(self._grade_scale.get('C'), self._grade_scale.get('B')):
-                    current_grade = 'C'
-                case value if value in range(self._grade_scale.get('D'), self._grade_scale.get('C')):
-                    current_grade = 'D'
-                case _:
-                    current_grade = 'F'
-
-            output += ("Student " + self._scores.index(current_score) + " score is " + str(
-                current_score) + " and grade is " + current_grade
-                       + "\n")
-            iteration += 1
+            output += ("Student " + str(self._scores.index(current_score) + 1) + " score is " + str(current_score)
+                       + " and grade is " + self.get_letter_grade(current_score) + "\n")
 
         return output
 
 
-test = Grader()
+if __name__ == "__main__":
+    cause_code = 0
+    app = gui.GUI()
+    app.mainloop()
+    grades = Grader(app.get_user_input())
