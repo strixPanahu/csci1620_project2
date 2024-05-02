@@ -2,24 +2,21 @@
     Zac Schimpf
     CSCI 1620 001/851
     Professor Owora
-    Week 02 - Lab 02
-    29/01/2024
+    Final - Project 2
+    29/4/2024
 """
 from csv import writer
 from statistics import median, mean
-
 import gui
 
 
 class Grader:
     def __init__(self, scores) -> None:
         """
-        Main logic structure that accepts students & _scores, creates grade scale, and prints results
+        Main logic structure that accepts students & scores, creates grade scale, and prints results
         """
         self._scores = scores
         self._grade_scale = self.set_grade_scale()
-
-        print(self.__str__())
         self.output_to_csv()
 
     def set_grade_scale(self) -> dict:
@@ -89,4 +86,6 @@ class Grader:
 if __name__ == "__main__":
     app = gui.GUI()
     app.mainloop()
+
     grades = Grader(app.get_user_input())
+    print(grades.__str__())
