@@ -1,10 +1,10 @@
-from csv import writer
 import tkinter
 from tkinter import ttk
+import ZacSchimpf2
 
 
 class GUI(tkinter.Tk):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self.title("Project 2")
@@ -14,6 +14,8 @@ class GUI(tkinter.Tk):
 
         self.user_input = []
         self.error_one = None
+        self.error_code = None
+        self.ERROR_MESSAGES = None
 
         self.grade_label = tkinter.ttk.Label(self, text="Grade:")
         self.grade_label.grid(row=0, column=0, padx=10, pady=10)
@@ -24,7 +26,10 @@ class GUI(tkinter.Tk):
         self.save = tkinter.ttk.Button(self, text="ENTER", command=self.refresh)
         self.save.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
 
-    def refresh(self):
+    def refresh(self) -> None:
+        """
+        Reload window after selecting the "Enter" button
+        """
         try:
             self.error_one.destroy()
         except AttributeError:
@@ -32,11 +37,12 @@ class GUI(tkinter.Tk):
 
         grade = self.get_grade()
         if grade < 0:  # if error code exists
+            self.error_code = grade
             if self.height != "120":
                 self.height = "120"
                 self.geometry("240x" + self.height)
 
-            self.error_one = tkinter.Label(self, text=self.get_error_code(grade))
+            self.error_one = tkinter.Label(self, text=self.get_error_code())
             self.error_one.grid(row=2, column=0, columnspan=4, padx=10, pady=10)
         else:  # save & export vals
             if self.height != "80":
@@ -49,8 +55,8 @@ class GUI(tkinter.Tk):
 
     def get_grade(self) -> int:
         """
-        Get Entry field
-        :return: int if good, else returns error code
+        Get data from the Grade entry
+        :return: positive int if good, else returns error code
         """
 
         try:
@@ -69,12 +75,10 @@ class GUI(tkinter.Tk):
         except ValueError:
             return -2
 
-    def get_user_input(self):
+    def get_user_input(self) -> list:
         return self.user_input
 
-    def get_error_code(self, error):
-        match error:
-            case -1:
-                return "Enter correct grade value"
-            case -2:
-                return "Grade must be between 0-100."
+    def get_error_code(self) -> str:
+        self.ERROR_MESSAGES = ["Grade must be between 0-100.", "Enter correct grade value"]
+
+        return self.ERROR_MESSAGES[self.error_code]

@@ -87,7 +87,6 @@ class Grader:
 
 
 if __name__ == "__main__":
-    cause_code = 0
     app = gui.GUI()
     app.mainloop()
     grades = Grader(app.get_user_input())
