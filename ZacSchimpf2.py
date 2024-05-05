@@ -1,10 +1,3 @@
-"""
-    Zac Schimpf
-    CSCI 1620 001/851
-    Professor Owora
-    Final - Project 2
-    29/4/2024
-"""
 from csv import writer
 from statistics import median, mean
 import gui
@@ -15,9 +8,19 @@ class Grader:
         """
         Main logic structure that accepts students & scores, creates grade scale, and prints results
         """
-        self._scores = scores
+        self._all_scores = scores
+        self._highest_scores = []
+
+        self.set_highest_scores()
         self._grade_scale = self.set_grade_scale()
         self.output_to_csv()
+
+    def set_highest_scores(self):
+        """
+        Parse student scores and set the highest attempt
+        """
+        for student in self._all_scores:
+            self._highest_scores.append(max([score for score in student[1] if score is not None]))
 
     def set_grade_scale(self) -> dict:
         """
@@ -25,7 +28,7 @@ class Grader:
         :return Dict containing A, B, C, D, & F percentage cutoffs
         """
 
-        best_score = max(self._scores)
+        best_score = max(self._highest_scores)
 
         return {'A': best_score - 10,
                 'B': best_score - 20,
@@ -38,7 +41,7 @@ class Grader:
         Retrieve weighted letter grade for provided grade percentage
         """
         match grade:
-            case value if value in range(self._grade_scale.get('A'), (max(self._scores) + 1)):
+            case value if value in range(self._grade_scale.get('A'), (max(self._highest_scores) + 1)):
                 grade = 'A'
             case value if value in range(self._grade_scale.get('B'), self._grade_scale.get('A')):
                 grade = 'B'
@@ -61,12 +64,10 @@ class Grader:
 
         with open(outbound_name, 'w', newline='') as outbound_file:
             csv_writer = writer(outbound_file, delimiter=',')
-            for current_score in self._scores:
-                csv_writer.writerow(["Student " + str(self._scores.index(current_score) + 1),
-                                     current_score,
-                                     self.get_letter_grade(current_score)])
-            csv_writer.writerow(["Median", median(self._scores)])
-            csv_writer.writerow(["Mean", mean(self._scores)])
+            for current_score in self._all_scores:
+                csv_writer.writerow(current_score)
+            csv_writer.writerow(["Median", median(self._highest_scores)])
+            csv_writer.writerow(["Mean", mean(self._highest_scores)])
 
     def __str__(self) -> str:
         """
@@ -76,9 +77,11 @@ class Grader:
 
         output = ""
 
-        for current_score in self._scores:
-            output += ("Student " + str(self._scores.index(current_score) + 1) + " score is " + str(current_score)
+        index = 0
+        for current_score in self._highest_scores:
+            output += (self._all_scores[index][0] + "\'s score is " + str(current_score)
                        + " and grade is " + self.get_letter_grade(current_score) + "\n")
+            index += 1
 
         return output
 

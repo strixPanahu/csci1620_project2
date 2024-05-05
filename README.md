@@ -1,33 +1,26 @@
-## **Project 2** ##
-
-Select any project of your choice. This could range from:
-
-- [x] Another lab to improve upon.
-
-- A personal project built from scratch.
-
-- Building off a project someone else designed or an existing code base (projects already available on the internet, textbooks, or AI generated).
-
-- For non-original ideas, we will be checking how you modified the original code by reviewing the features you added (you are expected to make significant changes to the original idea - that's why it is important you attend the project progress meeting to determine how much you need to add/change or if you need to pick a different project altogether because the scope/complexity of the one you've selected is small). Your project should have the items/features below:
-
-- [x] A. Code is organized into modules where applicable.
-
-- [x] B. Programs that use/retrieve/store data use files/databases/API.
-
-- [x] C. Data validation and exception handling is present where applicable.
-
-- [x] D. Appropriate algorithms/data structures/data types used appropriately.
-
-- [x] E. OOP best practices implemented (Separating code to classes, data hiding, inheritance). 
-
-- [x] F. Graphical user interface available and intuitive to use where applicable (must separate code in format discussed in lab 10 or test 10). 
-
-- [ ] G. Proper documentation.
-
-- [x] H. Using descriptive variable names, class names, and file names.
-
-- [x] I. Docstrings for functions.
-
-- [x] J. Type hinting.
-
-- [ ] K. Public GitHub link submitted with all project files placed/merged into the main/master branch. The project files could range from python files, images, documents, images, sound files, text files, binary files, executable files, etc. (generally anything that is needed for the application to work).
+## **Project 2: Grading Application** ##
+___
+### **Prerequisites** ###
+- **Python 3.12.1** or higher
+- **Tkinter 8.6** or higher
+- Supported Environments: 
+  - **Windows NT 22H2** or higher
+  - **Linux Kernel 6.2** or higher
+___
+### **Usage Guide** ###
+1. **Execute** the primary file, **ZacSchimpf2.py**
+2. **Enter Name and** at least one **grade**
+    - Please note: Any blank fields, or non-numerical, less than 0, or greater than 100 grades will be rejected.
+3. **Repeat until all grades have been submitted**
+4. **Select "X"** on the application's window to finish
+5. **Results** will be printed **to the console**
+6. **Individual grades** are saved in current working directory
+   - File Name: **output.csv**
+___
+### **About** ###
+- **Author**: Zac Schimpf
+- **Session**: CSCI 1620 001/851
+- **Instructor**: Agatha Owora
+- **Section**: Final - Project 2
+- **Creation**: 29/4/2024
+___
