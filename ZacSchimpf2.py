@@ -64,8 +64,9 @@ class Grader:
 
         with open(outbound_name, 'w', newline='') as outbound_file:
             csv_writer = writer(outbound_file, delimiter=',')
+            csv_writer.writerow(["Name", "Score 1", "Score 2", "Score 3", "Score 4"])
             for current_score in self._all_scores:
-                csv_writer.writerow(current_score)
+                csv_writer.writerow([current_score[0]] + current_score[1])
             csv_writer.writerow(["Median", median(self._highest_scores)])
             csv_writer.writerow(["Mean", mean(self._highest_scores)])
 
